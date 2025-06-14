@@ -63,14 +63,14 @@ Response
 
 
 POST
-http://localhost:8080/auth/registerCopy
+http://localhost:8080/auth/register
 Đăng ký
 { "name": "string", "account": "string", "password": "string" }
 String (VD: "Create Account Success.")
 
 
 POST
-http://localhost:8080/auth/loginCopy
+http://localhost:8080/auth/login
 Đăng nhập, lấy JWT
 { "account": "string", "password": "string" }
 { "message": "string", "token": "string" }
@@ -89,35 +89,35 @@ Response
 
 
 POST
-http://localhost:8080/user/notes/createCopy
+http://localhost:8080/user/notes/create
 Tạo ghi chú
 { "title": "string", "content": "string" }
 String (VD: "Note created.")
 
 
 POST
-http://localhost:8080/user/notes/update/{id}Copy
+http://localhost:8080/user/notes/update/{id}
 Sửa ghi chú
 { "title": "string", "content": "string" }
 String (VD: "Update Note Success.")
 
 
 POST
-http://localhost:8080/user/notes/delete/{id}Copy
+http://localhost:8080/user/notes/delete/{id}
 Xóa ghi chú
 -
 String (VD: "Delete Note Success.")
 
 
 GET
-http://localhost:8080/user/notes/viewCopy
+http://localhost:8080/user/notes/view
 Xem tất cả ghi chú
 -
 { "message": "string", "data": [{ "note_id": number, "user_id": number, "account": "string", "title": "string", "content": "string", "date": "string" }] }
 
 
 GET
-http://localhost:8080/user/notes/view/details/{id}Copy
+http://localhost:8080/user/notes/view/details/{id}
 Xem chi tiết ghi chú
 -
 { "message": "string", "data": { "note_id": number, "user_id": number, "account": "string", "title": "string", "content": "string", "date": "string" } }
@@ -136,7 +136,7 @@ Response
 
 
 GET
-http://localhost:8080/admin/notes/showallCopy
+http://localhost:8080/admin/notes/showall
 Xem tất cả ghi chú
 -
 [{ "note_id": number, "user_id": number, "account": "string", "title": "string", "content": "string", "date": "string" }]
