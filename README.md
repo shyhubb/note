@@ -1,14 +1,17 @@
 # 📝 Small Note Manager
 
-A simple and lightweight note management system built with **Spring Boot**. Perfect for learning Spring Boot fundamentals while creating a functional app to manage notes. This was my first dive into Spring Boot, and it was quite a journey! 😄
+A simple yet powerful note management system built with **Spring Boot**. Designed as a learning project to master Spring Boot, this app allows users to create, manage, and view their notes securely, with admin capabilities to oversee all notes. My first Spring Boot adventure, and it was a wild ride! 😄
 
 ## ✨ Features
-- **Admin API**:
-  - View all notes in the system at `http://localhost:8080/admin/notes/showall`.
-- **Auth API**:
-  - Register: Create a new user account to access the system.
-  - Login: Authenticate users to manage their notes securely.
-- Create and manage personal notes with a RESTful API.
+- **Authentication**:
+  - Register: Create a new user account (`/auth/register`).
+  - Login: Authenticate users with JWT tokens (`/auth/login`).
+- **User Note Management**:
+  - Create, update, and delete personal notes.
+  - View all notes or specific note details (restricted to note owners).
+- **Admin Dashboard**:
+  - View all notes in the system (`/admin/notes/showall`).
+- Secure RESTful APIs with Spring Security and JWT.
 - Lightweight and beginner-friendly codebase.
 
 ## 🚀 Getting Started
@@ -16,7 +19,7 @@ A simple and lightweight note management system built with **Spring Boot**. Perf
 ### Prerequisites
 - Java 17+ ☕
 - Maven
-- MySQL (used for persistent note and user data)
+- MySQL (for storing users and notes)
 - IDE (e.g., IntelliJ IDEA, VS Code)
 
 ### Installation
