@@ -1,43 +1,31 @@
 📝 Small Note Manager
-A simple and lightweight note management system built with Spring Boot. This project was my first dive into Spring Boot, created to learn its fundamentals while building a functional app for managing notes. It’s been a fun (and sometimes challenging!) journey! 😄
-✨ Features
+Ứng dụng quản lý ghi chú đơn giản xây dựng bằng Spring Boot. Đây là dự án đầu tiên của tôi để học Spring Boot, vừa học vừa làm, đúng là một hành trình thú vị! 😄
+✨ Tính năng
 
-Authentication:
-Register new users and log in securely with JWT tokens.
+Xác thực: Đăng ký và đăng nhập người dùng với JWT.
+Quản lý ghi chú: Tạo, sửa, xóa, xem ghi chú cá nhân.
+Admin: Xem tất cả ghi chú trong hệ thống.
+API RESTful bảo mật, dễ dùng.
 
-
-User Note Management:
-Create, update, delete, and view personal notes.
-View all notes or specific note details (restricted to note owners).
-
-
-Admin Dashboard:
-View all notes in the system (admin-only).
-
-
-Secure RESTful APIs with Spring Security and JWT.
-Lightweight and beginner-friendly codebase.
-
-🚀 Getting Started
-Prerequisites
+🚀 Cài đặt
+Yêu cầu
 
 Java 17+ ☕
 Maven
-MySQL (for storing users and notes)
-IDE (e.g., IntelliJ IDEA, VS Code)
+MySQL
+IDE (IntelliJ IDEA, VS Code)
 
-Installation
+Hướng dẫn
 
-Clone the repository:git clone https://github.com/your-username/small-note-manager.git
-
-
-Navigate to the project directory:cd small-note-manager
+Clone dự án:git clone https://github.com/your-username/small-note-manager.git
 
 
-Configure the database:
-Ensure MySQL is running locally.
-Create a database named smallnote.
-Update src/main/resources/application.properties with your database credentials:spring.datasource.url=jdbc:mysql://localhost:3306/smallnote
+Vào thư mục dự án:cd small-note-manager
+
+
+Cấu hình database:
+Tạo database MySQL tên smallnote.
+Cập nhật file src/main/resources/application.properties:spring.datasource.url=jdbc:mysql://localhost:3306/smallnote
 spring.datasource.username=your-username
 spring.datasource.password=your-password
 spring.jpa.hibernate.ddl-auto=update
@@ -45,34 +33,32 @@ jwt.secret=your-jwt-secret-key
 
 
 
-Note: Replace your-jwt-secret-key with a secure key for JWT signing (e.g., a 32-character string).
+Lưu ý: Thay your-jwt-secret-key bằng khóa bí mật (ví dụ: chuỗi 32 ký tự).
 
-Build and run the application:mvn spring-boot:run
-
-
-Access the app:
-Test APIs using Postman or curl (see endpoints below).
-Admin endpoint: http://localhost:8080/admin/notes/showall (requires admin authentication).
+Chạy ứng dụng:mvn spring-boot:run
 
 
+Truy cập:
+Dùng Postman để test API (xem danh sách bên dưới).
+Admin: http://localhost:8080/admin/notes/showall (cần quyền admin).
 
-🛠️ Tech Stack
+
+
+🛠️ Công nghệ
 
 Backend: Spring Boot, Spring Data JPA, Spring Security
 Database: MySQL
-Authentication: JSON Web Tokens (JWT)
-Build Tool: Maven
-Other: RESTful APIs, JSON responses
+Xác thực: JWT
+Build: Maven
 
-📚 API Endpoints
-Below is the complete list of API endpoints for the Small Note Manager:
-Authentication
+📚 Danh sách API
+Xác thực
 
 
 
-Method
+Phương thức
 Endpoint
-Description
+Mô tả
 Request Body
 Response
 
@@ -80,25 +66,25 @@ Response
 
 POST
 /auth/register
-Register a new user
+Đăng ký
 { "name": "string", "account": "string", "password": "string" }
-String (e.g., "Create Account Success.")
+String (VD: "Create Account Success.")
 
 
 POST
 /auth/login
-Authenticate a user (returns JWT)
+Đăng nhập (trả về JWT)
 { "account": "string", "password": "string" }
 LoginResponse (message, token)
 
 
-User Note Management
+Quản lý ghi chú (User)
 
 
 
-Method
+Phương thức
 Endpoint
-Description
+Mô tả
 Request Body
 Response
 
@@ -106,35 +92,35 @@ Response
 
 POST
 /user/notes/create
-Create a new note
+Tạo ghi chú
 { "title": "string", "content": "string" }
-String (e.g., "Note created.")
+String (VD: "Note created.")
 
 
 POST
 /user/notes/update/{id}
-Update an existing note
+Sửa ghi chú
 { "title": "string", "content": "string" }
-String (e.g., "Update Note Success.")
+String (VD: "Update Note Success.")
 
 
 POST
 /user/notes/delete/{id}
-Delete a note
+Xóa ghi chú
 -
-String (e.g., "Delete Note Success.")
+String (VD: "Delete Note Success.")
 
 
 GET
 /user/notes/view
-View all user’s notes
+Xem tất cả ghi chú
 -
-BaseResponse (message, list of NoteResponse)
+BaseResponse (message, danh sách NoteResponse)
 
 
 GET
 /user/notes/view/details/{id}
-View a specific note (owner only)
+Xem chi tiết ghi chú (chỉ chủ sở hữu)
 -
 BaseResponse (message, NoteResponse)
 
@@ -143,9 +129,9 @@ Admin
 
 
 
-Method
+Phương thức
 Endpoint
-Description
+Mô tả
 Request Body
 Response
 
@@ -153,35 +139,34 @@ Response
 
 GET
 /admin/notes/showall
-View all notes in the system
+Xem tất cả ghi chú
 -
 List<NoteResponse>
 
 
-Notes: 
+Lưu ý: 
 
-Protected endpoints (/user/*, /admin/*) require a JWT token in the Authorization header: Bearer <token>.
-Obtain the token via /auth/login.
-Admin endpoints require appropriate roles/permissions (configured in your AdminServiceImpl).
-All endpoints are accessible at http://localhost:8080 when running locally.
+API /user/* và /admin/* cần JWT token trong header Authorization: Bearer <token>.
+Lấy token từ /auth/login.
+API chạy tại http://localhost:8080.
 
-📸 Screenshots
-(Coming soon! Add Postman screenshots or UI if available.)
-🤝 Contributing
-Contributions are welcome! 😊 To contribute:
+📸 Hình ảnh
+(Sắp có! Thêm ảnh chụp Postman hoặc giao diện nếu có.)
+🤝 Đóng góp
+Muốn đóng góp? Rất hoan nghênh! 😊  
 
-Fork the repo.
-Create a new branch (git checkout -b feature/your-feature).
-Commit your changes (git commit -m 'Add cool feature').
-Push to the branch (git push origin feature/your-feature).
-Open a Pull Request.
+Fork repo.  
+Tạo nhánh mới (git checkout -b feature/your-feature).  
+Commit thay đổi (git commit -m 'Thêm tính năng mới').  
+Push nhánh (git push origin feature/your-feature).  
+Tạo Pull Request.
 
-📜 License
-MIT License. See LICENSE for details.
-🙌 Acknowledgments
+📜 Giấy phép
+MIT License. Xem LICENSE.
+🙌 Cảm ơn
 
-Huge thanks to the Spring Boot and Spring Security communities for amazing docs and tutorials!
-Built with 💖 as a learning project to conquer Spring Boot challenges.
+Cảm ơn cộng đồng Spring Boot và Spring Security!  
+Xây dựng với 💖 để chinh phục Spring Boot.
 
 
-Author: [Your Name] – your-email@example.comProject Link: [Link to your GitHub repo]
+Tác giả: [Tên của bạn] – email@example.comLink dự án: [Link GitHub của bạn]
