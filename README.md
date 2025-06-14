@@ -148,8 +148,6 @@ API /user/* chỉ cho user sở hữu ghi chú truy cập.
 API /admin/* cần quyền admin.
 Test bằng Postman, copy endpoint từ bảng.
 
-📸 Hình ảnh
-(Sắp có! Thêm ảnh Postman nếu muốn.)
 🤝 Đóng góp
 Muốn góp ý? Rất hoan nghênh! 😊  
 
@@ -167,4 +165,4 @@ Cảm ơn cộng đồng Spring Boot!
 Dự án xây với 💖 để học Spring Boot.
 
 
-Tác giả: [Tên của bạn] – email@example.comLink dự án: [Link GitHub của bạn]
+Tác giả: [Tên của bạn] – shyhubel@gmail.com Link dự án: [Link GitHub của bạn]
