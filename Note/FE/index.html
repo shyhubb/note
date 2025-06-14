@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spring Boot API Tester</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .api-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid;
+            transition: transform 0.3s ease;
+        }
+
+        .api-section:hover {
+            transform: translateY(-5px);
+        }
+
+        .auth-section {
+            border-left-color: #4CAF50;
+        }
+
+        .notes-section {
+            border-left-color: #2196F3;
+        }
+
+        .admin-section {
+            border-left-color: #FF9800;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        button {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .response-container {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border: 1px solid #e9ecef;
+        }
+
+        .response-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .response-content {
+            background: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+            white-space: pre-wrap;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .success {
+            border-left: 4px solid #28a745;
+            background-color: #d4edda;
+        }
+
+        .error {
+            border-left: 4px solid #dc3545;
+            background-color: #f8d7da;
+        }
+
+        .config-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .token-display {
+            background: #e9ecef;
+            padding: 10px;
+            border-radius: 5px;
+            word-break: break-all;
+            font-family: monospace;
+            margin-top: 10px;
+        }
+
+        .flex-container {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .flex-item {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .flex-container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🚀 Spring Boot API Tester</h1>
+
+        <!-- Configuration Section -->
+        <div class="config-section">
+            <h3>⚙️ Cấu hình</h3>
+            <div class="form-group">
+                <label for="baseUrl">Base URL:</label>
+                <input type="text" id="baseUrl" value="http://localhost:8080" placeholder="http://localhost:8080">
+                <small>Kiểm tra server Spring Boot đang chạy ở port này</small>
+            </div>
+            <button onclick="testConnection()">🔍 Test kết nối</button>
+            <div id="connectionStatus" style="margin-top: 10px;"></div>
+
+            <div id="tokenSection" style="display: none;">
+                <label>Token hiện tại:</label>
+                <div class="token-display" id="currentToken"></div>
+            </div>
+        </div>
+
+        <!-- Auth Section -->
+        <div class="api-section auth-section">
+            <h2 class="section-title">🔐 Authentication API</h2>
+
+            <div class="flex-container">
+                <div class="flex-item">
+                    <h4>Đăng ký</h4>
+                    <div class="form-group">
+                        <label for="regName">Tên:</label>
+                        <input type="text" id="regName" placeholder="Nhập tên">
+                    </div>
+                    <div class="form-group">
+                        <label for="regAccount">Tài khoản:</label>
+                        <input type="text" id="regAccount" placeholder="Nhập tài khoản">
+                    </div>
+                    <div class="form-group">
+                        <label for="regPassword">Mật khẩu:</label>
+                        <input type="password" id="regPassword" placeholder="Nhập mật khẩu">
+                    </div>
+                    <button onclick="register()">Đăng ký</button>
+                </div>
+
+                <div class="flex-item">
+                    <h4>Đăng nhập</h4>
+                    <div class="form-group">
+                        <label for="loginAccount">Tài khoản:</label>
+                        <input type="text" id="loginAccount" placeholder="Nhập tài khoản">
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Mật khẩu:</label>
+                        <input type="password" id="loginPassword" placeholder="Nhập mật khẩu">
+                    </div>
+                    <button onclick="login()">Đăng nhập</button>
+                </div>
+            </div>
+
+            <div class="response-container" id="authResponse" style="display: none;">
+                <div class="response-title">Kết quả:</div>
+                <div class="response-content" id="authContent"></div>
+            </div>
+        </div>
+
+        <!-- Notes Section -->
+        <div class="api-section notes-section">
+            <h2 class="section-title">📝 Notes API</h2>
+
+            <h4>Tạo ghi chú mới</h4>
+            <div class="form-group">
+                <label for="noteTitle">Tiêu đề:</label>
+                <input type="text" id="noteTitle" placeholder="Nhập tiêu đề ghi chú">
+            </div>
+            <div class="form-group">
+                <label for="noteContent">Nội dung:</label>
+                <textarea id="noteContent" placeholder="Nhập nội dung ghi chú"></textarea>
+            </div>
+            <button onclick="createNote()">Tạo ghi chú</button>
+
+            <div class="response-container" id="noteResponse" style="display: none;">
+                <div class="response-title">Kết quả:</div>
+                <div class="response-content" id="noteContent"></div>
+            </div>
+        </div>
+
+        <!-- Admin Section -->
+        <div class="api-section admin-section">
+            <h2 class="section-title">👑 Admin API</h2>
+
+            <h4>Xem tất cả ghi chú</h4>
+            <p>Cần token để truy cập endpoint này</p>
+            <button onclick="showAllNotes()">Lấy tất cả ghi chú</button>
+
+            <div class="response-container" id="adminResponse" style="display: none;">
+                <div class="response-title">Kết quả:</div>
+                <div class="response-content" id="adminContent"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentToken = null;
+
+        function getBaseUrl() {
+            return document.getElementById('baseUrl').value;
+        }
+
+        function showResponse(containerId, contentId, data, isSuccess = true) {
+            const container = document.getElementById(containerId);
+            const content = document.getElementById(contentId);
+
+            container.style.display = 'block';
+            container.className = `response-container ${isSuccess ? 'success' : 'error'}`;
+            content.textContent = JSON.stringify(data, null, 2);
+        }
+
+        function updateTokenDisplay() {
+            const tokenSection = document.getElementById('tokenSection');
+            const tokenDisplay = document.getElementById('currentToken');
+
+            if (currentToken) {
+                tokenSection.style.display = 'block';
+                tokenDisplay.textContent = currentToken;
+            } else {
+                tokenSection.style.display = 'none';
+            }
+        }
+
+        async function register() {
+            const name = document.getElementById('regName').value;
+            const account = document.getElementById('regAccount').value;
+            const password = document.getElementById('regPassword').value;
+
+            if (!name || !account || !password) {
+                alert('Vui lòng điền đầy đủ thông tin!');
+                return;
+            }
+
+            try {
+                console.log('Đang gửi request đến:', `${getBaseUrl()}/auth/register`);
+
+                const response = await fetch(`${getBaseUrl()}/auth/register`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        name: name,
+                        account: account,
+                        password: password
+                    })
+                });
+
+                const result = await response.text();
+                showResponse('authResponse', 'authContent', {
+                    status: response.status,
+                    message: result
+                }, response.ok);
+
+            } catch (error) {
+                console.error('Lỗi:', error);
+                showResponse('authResponse', 'authContent', {
+                    error: 'Lỗi kết nối: ' + error.message,
+                    troubleshoot: [
+                        '1. Kiểm tra Spring Boot server đã chạy chưa',
+                        '2. Kiểm tra port có đúng không (mặc định 8080)',
+                        '3. Thêm CORS configuration vào Spring Boot',
+                        '4. Kiểm tra firewall/antivirus'
+                    ]
+                }, false);
+            }
+        }
+
+        async function login() {
+            const account = document.getElementById('loginAccount').value;
+            const password = document.getElementById('loginPassword').value;
+
+            if (!account || !password) {
+                alert('Vui lòng điền đầy đủ thông tin!');
+                return;
+            }
+
+            try {
+                console.log('Đang gửi request đến:', `${getBaseUrl()}/auth/login`);
+
+                const response = await fetch(`${getBaseUrl()}/auth/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        account: account,
+                        password: password
+                    })
+                });
+
+                console.log('Response status:', response.status);
+                console.log('Response headers:', response.headers.get('content-type'));
+
+                // Kiểm tra content-type để quyết định parse như thế nào
+                const contentType = response.headers.get('content-type');
+                let result;
+
+                if (contentType && contentType.includes('application/json')) {
+                    try {
+                        result = await response.json();
+                    } catch (jsonError) {
+                        const textResult = await response.text();
+                        result = { message: textResult };
+                    }
+                } else {
+                    const textResult = await response.text();
+                    result = { message: textResult };
+                }
+
+                console.log('Parsed result:', result);
+
+                // Lưu token nếu có
+                if (response.ok && result.token) {
+                    currentToken = result.token;
+                    updateTokenDisplay();
+                }
+
+                showResponse('authResponse', 'authContent', {
+                    status: response.status,
+                    contentType: contentType,
+                    ...result
+                }, response.ok);
+
+            } catch (error) {
+                console.error('Lỗi:', error);
+                showResponse('authResponse', 'authContent', {
+                    error: 'Lỗi kết nối: ' + error.message,
+                    troubleshoot: [
+                        '1. Kiểm tra Spring Boot server đã chạy chưa',
+                        '2. Kiểm tra CORS configuration',
+                        '3. Kiểm tra endpoint /auth/login có tồn tại không'
+                    ]
+                }, false);
+            }
+        }
+
+        async function createNote() {
+            const title = document.getElementById('noteTitle').value;
+            const content = document.getElementById('noteContent').value;
+
+            if (!title || !content) {
+                alert('Vui lòng điền đầy đủ thông tin!');
+                return;
+            }
+
+            try {
+                console.log('Đang tạo note với title:', title);
+
+                const headers = {
+                    'Content-Type': 'application/json'
+                };
+
+                if (currentToken) {
+                    headers['Authorization'] = `Bearer ${currentToken}`;
+                    console.log('Sử dụng token:', currentToken.substring(0, 20) + '...');
+                }
+
+                const response = await fetch(`${getBaseUrl()}/notes/create`, {
+                    method: 'POST',
+                    headers: headers,
+                    body: JSON.stringify({
+                        title: title,
+                        content: content
+                    })
+                });
+
+                console.log('Response status:', response.status);
+                console.log('Response headers:', response.headers.get('content-type'));
+
+                // Kiểm tra content-type để quyết định parse như thế nào
+                const contentType = response.headers.get('content-type');
+                let result;
+
+                if (contentType && contentType.includes('application/json')) {
+                    try {
+                        result = await response.json();
+                    } catch (jsonError) {
+                        const textResult = await response.text();
+                        result = { message: textResult };
+                    }
+                } else {
+                    const textResult = await response.text();
+                    result = { message: textResult };
+                }
+
+                console.log('Parsed result:', result);
+
+                showResponse('noteResponse', 'noteContent', {
+                    status: response.status,
+                    contentType: contentType,
+                    ...result
+                }, response.ok);
+
+                if (response.ok) {
+                    document.getElementById('noteTitle').value = '';
+                    document.getElementById('noteContent').value = '';
+                }
+
+            } catch (error) {
+                console.error('Lỗi:', error);
+                showResponse('noteResponse', 'noteContent', {
+                    error: 'Lỗi kết nối: ' + error.message,
+                    troubleshoot: [
+                        '1. Kiểm tra endpoint /notes/create',
+                        '2. Kiểm tra token nếu cần authentication',
+                        '3. Kiểm tra request body format'
+                    ]
+                }, false);
+            }
+        }
+
+        async function showAllNotes() {
+            if (!currentToken) {
+                alert('Vui lòng đăng nhập trước để lấy token!');
+                return;
+            }
+
+            try {
+                console.log('Đang gửi request với token:', currentToken.substring(0, 20) + '...');
+
+                const response = await fetch(`${getBaseUrl()}/admin/notes/showall`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${currentToken}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                console.log('Response status:', response.status);
+                console.log('Response headers:', response.headers.get('content-type'));
+
+                // Kiểm tra content-type để quyết định parse như thế nào
+                const contentType = response.headers.get('content-type');
+                let result;
+
+                if (contentType && contentType.includes('application/json')) {
+                    try {
+                        result = await response.json();
+                    } catch (jsonError) {
+                        const textResult = await response.text();
+                        result = { message: textResult };
+                    }
+                } else {
+                    const textResult = await response.text();
+                    result = { message: textResult };
+                }
+
+                console.log('Parsed result:', result);
+
+                showResponse('adminResponse', 'adminContent', {
+                    status: response.status,
+                    contentType: contentType,
+                    data: result
+                }, response.ok);
+
+            } catch (error) {
+                console.error('Lỗi:', error);
+                showResponse('adminResponse', 'adminContent', {
+                    error: 'Lỗi kết nối: ' + error.message,
+                    troubleshoot: [
+                        '1. Kiểm tra token có hợp lệ không',
+                        '2. Kiểm tra user có role ADMIN không',
+                        '3. Kiểm tra endpoint /admin/notes/showall'
+                    ]
+                }, false);
+            }
+        }
+
+        async function testConnection() {
+            const statusDiv = document.getElementById('connectionStatus');
+            statusDiv.innerHTML = '🔄 Đang kiểm tra kết nối...';
+
+            try {
+                const response = await fetch(`${getBaseUrl()}/auth/login`, {
+                    method: 'OPTIONS'
+                });
+
+                statusDiv.innerHTML = '✅ Kết nối thành công! Server đang hoạt động.';
+                statusDiv.style.color = 'green';
+            } catch (error) {
+                statusDiv.innerHTML = `
+                    ❌ Không thể kết nối đến server!<br>
+                    <strong>Các bước khắc phục:</strong><br>
+                    1. Kiểm tra Spring Boot server đã chạy chưa<br>
+                    2. Kiểm tra URL và port có đúng không<br>
+                    3. Thêm CORS configuration vào Spring Boot<br>
+                    4. Kiểm tra firewall có chặn không
+                `;
+                statusDiv.style.color = 'red';
+            }
+        }
+
+        // Initialize
+        updateTokenDisplay();
+    </script>
+</body>
+
+</html>
