@@ -1,1 +1,2 @@
-# Small project was bulit when i started learning spring boot 
+
+Small project was built when i started learning spring boot
