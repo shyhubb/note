@@ -1,12 +1,12 @@
 📝 Small Note Manager
  
-Ứng dụng quản lý ghi chú đơn giản dùng Spring Boot. Đây là dự án đầu tiên để học Spring Boot, vừa học vừa làm, đúng là một trải nghiệm thú vị! 😄
+Ứng dụng quản lý ghi chú đơn giản dùng Spring Boot. Dự án đầu tay để học Spring Boot, vừa học vừa làm, đúng là một chuyến phiêu lưu! 😄
 ✨ Tính năng
 
 Xác thực: Đăng ký, đăng nhập với JWT.
 Ghi chú: Tạo, sửa, xóa, xem ghi chú cá nhân.
-Admin: Xem tất cả ghi chú trong hệ thống.
-API RESTful bảo mật, dễ sử dụng.
+Admin: Xem tất cả ghi chú.
+API RESTful bảo mật, dễ dùng.
 
 🚀 Cài đặt
 Yêu cầu
@@ -39,11 +39,7 @@ Lưu ý: Thay your-jwt-secret-key bằng khóa bí mật (32 ký tự).
 Chạy ứng dụng:mvn spring-boot:run
 
 
-Truy cập:
-Test API bằng Postman (xem bảng API).
-Admin: http://localhost:8080/admin/notes/showall (cần quyền admin).
-
-
+Truy cập: Test API bằng Postman (xem bảng API).
 
 🛠️ Công nghệ
 
@@ -53,7 +49,7 @@ Xác thực: JWT
 Build: Maven
 
 📚 API Endpoints
-Cơ sở URL: http://localhost:8080. API /user/* và /admin/* cần header Authorization: Bearer <token> (lấy từ /auth/login).
+API /user/* và /admin/* cần header Authorization: Bearer <token> (lấy từ /auth/login). Copy endpoint trực tiếp từ code blocks dưới đây.
 Xác thực
 
 
@@ -67,14 +63,14 @@ Response
 
 
 POST
-/auth/register
+http://localhost:8080/auth/register
 Đăng ký
 { "name": "string", "account": "string", "password": "string" }
 String (VD: "Create Account Success.")
 
 
 POST
-/auth/login
+http://localhost:8080/auth/login
 Đăng nhập, lấy JWT
 { "account": "string", "password": "string" }
 { "message": "string", "token": "string" }
@@ -93,35 +89,35 @@ Response
 
 
 POST
-/user/notes/create
+http://localhost:8080/user/notes/create
 Tạo ghi chú
 { "title": "string", "content": "string" }
 String (VD: "Note created.")
 
 
 POST
-/user/notes/update/{id}
+http://localhost:8080/user/notes/update/{id}
 Sửa ghi chú
 { "title": "string", "content": "string" }
 String (VD: "Update Note Success.")
 
 
 POST
-/user/notes/delete/{id}
+http://localhost:8080/user/notes/delete/{id}
 Xóa ghi chú
 -
 String (VD: "Delete Note Success.")
 
 
 GET
-/user/notes/view
+http://localhost:8080/user/notes/view
 Xem tất cả ghi chú
 -
 { "message": "string", "data": [{ "note_id": number, "user_id": number, "account": "string", "title": "string", "content": "string", "date": "string" }] }
 
 
 GET
-/user/notes/view/details/{id}
+http://localhost:8080/user/notes/view/details/{id}
 Xem chi tiết ghi chú
 -
 { "message": "string", "data": { "note_id": number, "user_id": number, "account": "string", "title": "string", "content": "string", "date": "string" } }
@@ -140,7 +136,7 @@ Response
 
 
 GET
-/admin/notes/showall
+http://localhost:8080/admin/notes/showall
 Xem tất cả ghi chú
 -
 [{ "note_id": number, "user_id": number, "account": "string", "title": "string", "content": "string", "date": "string" }]
@@ -150,7 +146,7 @@ Lưu ý:
 
 API /user/* chỉ cho user sở hữu ghi chú truy cập.
 API /admin/* cần quyền admin.
-Test bằng Postman hoặc curl.
+Test bằng Postman, copy endpoint từ bảng.
 
 📸 Hình ảnh
 (Sắp có! Thêm ảnh Postman nếu muốn.)
@@ -168,7 +164,7 @@ MIT License. Xem LICENSE.
 🙌 Cảm ơn
 
 Cảm ơn cộng đồng Spring Boot!  
-Dự án này được xây với 💖 để học Spring Boot.
+Dự án xây với 💖 để học Spring Boot.
 
 
 Tác giả: [Tên của bạn] – email@example.comLink dự án: [Link GitHub của bạn]
