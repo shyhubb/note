@@ -18,7 +18,7 @@ IDE (IntelliJ, VS Code)
 
 Hướng dẫn
 
-Clone dự án:git clone https://github.com/your-username/small-note-manager.git
+Clone dự án:git clone https://github.com/shyhubb/note
 
 
 Vào thư mục:cd small-note-manager
