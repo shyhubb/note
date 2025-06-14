@@ -1,6 +1,6 @@
-📝 Small Note Manager
+##📝 Small Note Manager
  
-Ứng dụng quản lý ghi chú đơn giản dùng Spring Boot. Dự án đầu tay để học Spring Boot, vừa học vừa làm, đúng là một chuyến phiêu lưu! 😄
+Ứng dụng quản lý ghi chú đơn giản dùng Spring Boot.
 ✨ Tính năng
 
 Xác thực: Đăng ký, đăng nhập với JWT.
