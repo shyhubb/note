@@ -1,11 +1,12 @@
 📝 Small Note Manager
-Ứng dụng quản lý ghi chú đơn giản dùng Spring Boot. Đây là dự án đầu tay để học Spring Boot, vừa học vừa làm, đúng là một chuyến phiêu lưu! 😄
+ 
+Ứng dụng quản lý ghi chú đơn giản dùng Spring Boot. Đây là dự án đầu tiên để học Spring Boot, vừa học vừa làm, đúng là một trải nghiệm thú vị! 😄
 ✨ Tính năng
 
 Xác thực: Đăng ký, đăng nhập với JWT.
 Ghi chú: Tạo, sửa, xóa, xem ghi chú cá nhân.
 Admin: Xem tất cả ghi chú trong hệ thống.
-API RESTful bảo mật, dễ dùng.
+API RESTful bảo mật, dễ sử dụng.
 
 🚀 Cài đặt
 Yêu cầu
@@ -13,7 +14,7 @@ Yêu cầu
 Java 17+ ☕
 Maven
 MySQL
-IDE (IntelliJ IDEA, VS Code)
+IDE (IntelliJ, VS Code)
 
 Hướng dẫn
 
@@ -25,7 +26,7 @@ Vào thư mục:cd small-note-manager
 
 Cấu hình database:
 Tạo database MySQL: smallnote.
-Cập nhật src/main/resources/application.properties:spring.datasource.url=jdbc:mysql://localhost:3306/smallnote
+Cập nhật application.properties:spring.datasource.url=jdbc:mysql://localhost:3306/smallnote
 spring.datasource.username=your-username
 spring.datasource.password=your-password
 spring.jpa.hibernate.ddl-auto=update
@@ -39,7 +40,7 @@ Chạy ứng dụng:mvn spring-boot:run
 
 
 Truy cập:
-Test API bằng Postman (xem danh sách API).
+Test API bằng Postman (xem bảng API).
 Admin: http://localhost:8080/admin/notes/showall (cần quyền admin).
 
 
@@ -52,8 +53,8 @@ Xác thực: JWT
 Build: Maven
 
 📚 API Endpoints
-Tất cả API chạy tại http://localhost:8080. Dùng Bearer <token> trong header Authorization cho API /user/* và /admin/* (lấy token từ /auth/login).
-1. Xác thực
+Cơ sở URL: http://localhost:8080. API /user/* và /admin/* cần header Authorization: Bearer <token> (lấy từ /auth/login).
+Xác thực
 
 
 
@@ -67,7 +68,7 @@ Response
 
 POST
 /auth/register
-Đăng ký người dùng
+Đăng ký
 { "name": "string", "account": "string", "password": "string" }
 String (VD: "Create Account Success.")
 
@@ -79,7 +80,7 @@ POST
 { "message": "string", "token": "string" }
 
 
-2. Quản lý ghi chú (User)
+Ghi chú (User)
 
 
 
@@ -93,7 +94,7 @@ Response
 
 POST
 /user/notes/create
-Tạo ghi chú mới
+Tạo ghi chú
 { "title": "string", "content": "string" }
 String (VD: "Note created.")
 
@@ -114,9 +115,9 @@ String (VD: "Delete Note Success.")
 
 GET
 /user/notes/view
-Xem tất cả ghi chú của user
+Xem tất cả ghi chú
 -
-{ "message": "string", "data": [ { "note_id": number, "user_id": number, "account": "string", "title": "string", "content": "string", "date": "string" } ] }
+{ "message": "string", "data": [{ "note_id": number, "user_id": number, "account": "string", "title": "string", "content": "string", "date": "string" }] }
 
 
 GET
@@ -126,7 +127,7 @@ Xem chi tiết ghi chú
 { "message": "string", "data": { "note_id": number, "user_id": number, "account": "string", "title": "string", "content": "string", "date": "string" } }
 
 
-3. Admin
+Admin
 
 
 
@@ -142,14 +143,14 @@ GET
 /admin/notes/showall
 Xem tất cả ghi chú
 -
-[ { "note_id": number, "user_id": number, "account": "string", "title": "string", "content": "string", "date": "string" } ]
+[{ "note_id": number, "user_id": number, "account": "string", "title": "string", "content": "string", "date": "string" }]
 
 
 Lưu ý: 
 
-API /user/* chỉ cho phép user sở hữu ghi chú truy cập.
+API /user/* chỉ cho user sở hữu ghi chú truy cập.
 API /admin/* cần quyền admin.
-Test API bằng Postman hoặc curl.
+Test bằng Postman hoặc curl.
 
 📸 Hình ảnh
 (Sắp có! Thêm ảnh Postman nếu muốn.)
@@ -157,9 +158,9 @@ Test API bằng Postman hoặc curl.
 Muốn góp ý? Rất hoan nghênh! 😊  
 
 Fork repo.  
-Tạo nhánh (git checkout -b feature/your-feature).  
-Commit (git commit -m 'Thêm tính năng').  
-Push (git push origin feature/your-feature).  
+Tạo nhánh: git checkout -b feature/your-feature.  
+Commit: git commit -m 'Thêm tính năng'.  
+Push: git push origin feature/your-feature.  
 Tạo Pull Request.
 
 📜 Giấy phép
