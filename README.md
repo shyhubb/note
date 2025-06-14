@@ -1,6 +1,6 @@
-##📝 Small Note Manager
+📝 Small Note Manager
  
-Ứng dụng quản lý ghi chú đơn giản dùng Spring Boot.
+Ứng dụng quản lý ghi chú đơn giản dùng Spring Boot. Dự án đầu tay để học Spring Boot, vừa học vừa làm, đúng là một trải nghiệm thú vị! 😄
 ✨ Tính năng
 
 Xác thực: Đăng ký, đăng nhập với JWT.
@@ -18,10 +18,10 @@ IDE (IntelliJ, VS Code)
 
 Hướng dẫn
 
-Clone dự án:git clone https://github.com/shyhubb/note
+Clone dự án:git clone https://github.com/shyhubb/note.git
 
 
-Vào thư mục:cd small-note-manager
+Vào thư mục:cd note
 
 
 Cấu hình database:
@@ -49,7 +49,7 @@ Xác thực: JWT
 Build: Maven
 
 📚 API Endpoints
-API /user/* và /admin/* cần header Authorization: Bearer <token> (lấy từ /auth/login). Copy endpoint trực tiếp từ code blocks dưới đây.
+API /user/* và /admin/* cần header Authorization: Bearer <token> (lấy từ /auth/login). Copy endpoint bằng nút hoặc code block.
 Xác thực
 
 
@@ -63,14 +63,14 @@ Response
 
 
 POST
-http://localhost:8080/auth/register
+http://localhost:8080/auth/registerCopy
 Đăng ký
 { "name": "string", "account": "string", "password": "string" }
 String (VD: "Create Account Success.")
 
 
 POST
-http://localhost:8080/auth/login
+http://localhost:8080/auth/loginCopy
 Đăng nhập, lấy JWT
 { "account": "string", "password": "string" }
 { "message": "string", "token": "string" }
@@ -89,35 +89,35 @@ Response
 
 
 POST
-http://localhost:8080/user/notes/create
+http://localhost:8080/user/notes/createCopy
 Tạo ghi chú
 { "title": "string", "content": "string" }
 String (VD: "Note created.")
 
 
 POST
-http://localhost:8080/user/notes/update/{id}
+http://localhost:8080/user/notes/update/{id}Copy
 Sửa ghi chú
 { "title": "string", "content": "string" }
 String (VD: "Update Note Success.")
 
 
 POST
-http://localhost:8080/user/notes/delete/{id}
+http://localhost:8080/user/notes/delete/{id}Copy
 Xóa ghi chú
 -
 String (VD: "Delete Note Success.")
 
 
 GET
-http://localhost:8080/user/notes/view
+http://localhost:8080/user/notes/viewCopy
 Xem tất cả ghi chú
 -
 { "message": "string", "data": [{ "note_id": number, "user_id": number, "account": "string", "title": "string", "content": "string", "date": "string" }] }
 
 
 GET
-http://localhost:8080/user/notes/view/details/{id}
+http://localhost:8080/user/notes/view/details/{id}Copy
 Xem chi tiết ghi chú
 -
 { "message": "string", "data": { "note_id": number, "user_id": number, "account": "string", "title": "string", "content": "string", "date": "string" } }
@@ -136,7 +136,7 @@ Response
 
 
 GET
-http://localhost:8080/admin/notes/showall
+http://localhost:8080/admin/notes/showallCopy
 Xem tất cả ghi chú
 -
 [{ "note_id": number, "user_id": number, "account": "string", "title": "string", "content": "string", "date": "string" }]
@@ -146,8 +146,11 @@ Lưu ý:
 
 API /user/* chỉ cho user sở hữu ghi chú truy cập.
 API /admin/* cần quyền admin.
-Test bằng Postman, copy endpoint từ bảng.
+Nút copy chỉ hoạt động trên GitHub Pages hoặc viewer hỗ trợ JS. Nếu không, copy từ code block.
+Test bằng Postman.
 
+📸 Hình ảnh
+(Sắp có! Thêm ảnh Postman nếu muốn.)
 🤝 Đóng góp
 Muốn góp ý? Rất hoan nghênh! 😊  
 
@@ -165,4 +168,4 @@ Cảm ơn cộng đồng Spring Boot!
 Dự án xây với 💖 để học Spring Boot.
 
 
-Tác giả: [Tên của bạn] – shyhubel@gmail.com Link dự án: [Link GitHub của bạn]
+Tác giả: Shyhubb – shyhubel@gmail.comLink dự án: https://github.com/shyhubb/note
