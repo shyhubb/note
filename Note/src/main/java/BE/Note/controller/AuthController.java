@@ -25,7 +25,7 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<String> Register(@RequestBody RegisterRequest registerRequest) {
         String massage = authServiceImpl.Register(registerRequest.getName(), registerRequest.getAccount(),
-                registerRequest.getPassword());
+                registerRequest.getPassword(), registerRequest.getRepassword());
         if (massage.equals("Create Account Success."))
             return new ResponseEntity<>(massage, HttpStatus.CREATED);
         else

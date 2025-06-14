@@ -26,7 +26,9 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public String Register(String name, String account, String password) {
+    public String Register(String name, String account, String password, String repassword) {
+        if (password != repassword)
+            return "Repassword Does Not Match.";
         if (userRepository.findByAccount(account) != null)
             return String.format("Account '%s' already exists. Please choose another account.", account);
         password = passwordEncoder.encode(password);
