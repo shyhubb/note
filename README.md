@@ -3,9 +3,9 @@
 A simple and lightweight note management system built with **Spring Boot**. Perfect for learning Spring Boot fundamentals while creating a functional app to manage notes. This was my first dive into Spring Boot, and it was quite a journey! 😄
 
 ## ✨ Features
-- **Admin api :
+**Admin api :
   +View all notes in the system at `http://localhost:8080/admin/notes/showall`.
-- **Auth api :
+**Auth api :
   + Register: 
   + Login: 
 
