@@ -17,4 +17,6 @@ public interface NoteService {
 
     public List<Note> findByUser(User user);
 
+    public void deleteNoteByUser(User user);
+
 }

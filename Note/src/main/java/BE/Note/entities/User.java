@@ -2,6 +2,7 @@ package BE.Note.entities;
 
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,7 +21,8 @@ public class User {
     private String password;
     private String role;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true) // anotation tu dong xoa cac
+                                                                                   // fogeinkey den note khi xoa user
     private List<Note> notes;
 
     User() {

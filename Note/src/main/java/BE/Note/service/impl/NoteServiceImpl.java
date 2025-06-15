@@ -51,4 +51,9 @@ public class NoteServiceImpl implements NoteService {
         return noteRepository.findByUser(user);
     }
 
+    @Override
+    public void deleteNoteByUser(User user) {
+        noteRepository.deleteByUser(user);
+    }
+
 }

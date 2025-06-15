@@ -3,7 +3,6 @@ package BE.Note.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import BE.Note.entities.User;
 import BE.Note.repository.UserRepository;
 import BE.Note.service.interfaces.AuthService;
@@ -27,7 +26,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public String Register(String name, String account, String password, String repassword) {
-        if (password != repassword)
+        if (!password.equals(repassword))
             return "Repassword Does Not Match.";
         if (userRepository.findByAccount(account) != null)
             return String.format("Account '%s' already exists. Please choose another account.", account);

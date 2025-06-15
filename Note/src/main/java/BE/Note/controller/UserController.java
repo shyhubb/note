@@ -2,12 +2,16 @@ package BE.Note.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import BE.Note.dto.Request.ChangePassRequest;
 import BE.Note.dto.Request.NoteRequest;
 import BE.Note.dto.Response.BaseResponse;
 import BE.Note.dto.Response.NoteResponse;
+import BE.Note.dto.Response.ProfileResponse;
 import BE.Note.entities.Note;
 import BE.Note.service.impl.CurrentUserDetails;
 import BE.Note.service.impl.NoteServiceImpl;
+import BE.Note.service.impl.UserServiceImpl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -29,6 +33,9 @@ public class UserController {
 
     @Autowired
     private CurrentUserDetails currentUserDetails;
+
+    @Autowired
+    private UserServiceImpl userServiceImpl;
 
     // create
     @PostMapping("notes/create")
@@ -69,7 +76,7 @@ public class UserController {
     // view all note form this user(resquest)
 
     @GetMapping("/notes/view")
-    public ResponseEntity<BaseResponse> detailsNote() {
+    public ResponseEntity<BaseResponse<List<NoteResponse>>> detailsNote() {
         List<Note> notes = noteServiceImpl.findByUser(currentUserDetails.getUserDetails());
         if (notes == null)
             return new ResponseEntity<>(new BaseResponse<>("Note Does Not Exist.", null), HttpStatus.BAD_REQUEST);
@@ -90,7 +97,7 @@ public class UserController {
     }
 
     @GetMapping("/notes/view/details/{id}")
-    public ResponseEntity<BaseResponse> detailsNote(@PathVariable Long id) {
+    public ResponseEntity<BaseResponse<NoteResponse>> detailsNote(@PathVariable Long id) {
         Optional<Note> notetemp = noteServiceImpl.findById(id);
 
         if (!notetemp.isPresent()) {
@@ -120,6 +127,42 @@ public class UserController {
         return new ResponseEntity<>(
                 new BaseResponse<>("Success.", noteResponse),
                 HttpStatus.OK);
+    }
+
+    // endpoint for user profile
+
+    @GetMapping("/profile/view")
+    public ResponseEntity<BaseResponse<ProfileResponse>> viewProfile() {
+        if (userServiceImpl.viewProfile() != null) {
+            return new ResponseEntity<>(new BaseResponse<>("Success.", userServiceImpl.viewProfile()), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(new BaseResponse<>("Error.", null), HttpStatus.BAD_REQUEST);
+    }
+
+    @PostMapping("/profile/changename/{changeName}")
+    public ResponseEntity<BaseResponse<String>> changeName(@PathVariable String changeName) {
+        // Validate input
+        if (changeName == null || changeName.trim().isEmpty()) {
+            return ResponseEntity.badRequest()
+                    .body(new BaseResponse<>("Name cannot be empty", null));
+        }
+        userServiceImpl.changeName(changeName);
+        return ResponseEntity.ok(new BaseResponse<>("Success", changeName));
+
+    }
+
+    @GetMapping("/account/delete")
+    public ResponseEntity<BaseResponse<String>> deleteAccount() {
+        return new ResponseEntity<>(new BaseResponse<>(userServiceImpl.deleteAccount(), null), HttpStatus.OK);
+    }
+
+    @PostMapping("/account/changepass")
+    public ResponseEntity<BaseResponse<String>> changePassword(@RequestBody ChangePassRequest changePassRequest) {
+        String message = userServiceImpl.changePassword(changePassRequest.getChangePass(),
+                changePassRequest.getConfirmPass());
+        if (message.equals("Change Password Success."))
+            return new ResponseEntity<>(new BaseResponse<>(message, null), HttpStatus.OK);
+        return new ResponseEntity<>(new BaseResponse<>(message, null), HttpStatus.BAD_REQUEST);
     }
 
 }

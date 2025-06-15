@@ -10,4 +10,6 @@ import java.util.List;
 @Repository
 public interface NoteRepository extends JpaRepository<Note, Long> {
     public List<Note> findByUser(User user);
+
+    public void deleteByUser(User user);
 }
